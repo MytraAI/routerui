@@ -1,0 +1,22 @@
+/api/
+ ping - upload ping data
+ wifi - download wifi monitoring data
+ clients - upload MAC addresses of devices on the lan
+ vpn - Download a VPN config (not complete)
+ lldp - upload lldp neighbors (not complete)
+ jobs - download what jobs the client will do
+ devs - upload network device list (unused)
+ dns - download a config file for systemd-resolved
+ file - download a file to an arbitrary location (not complete, may be bad)
+ nftable - download nftable configuration
+ machineid - upload machine id (unused) 
+ vxlan - download vxlan config (unused due to systemd being broken)
+ vxstate - upload vxlan state (unused)
+ vxfdb - upload vxlan neighbors (not complete)
+ site - download your site name (not complete)
+ dhcp - download a dhcpd config file
+ router - download a list of routers (unused)
+ mtr - upload mtr (fancy traceroute) data
+ wpa - download a wpa_supplicant.conf file for your site
+ extip - upload your external IP
+ speedtest - upload the result of a speedtest.net speedtest 
