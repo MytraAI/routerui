@@ -1,0 +1,46 @@
+<html>
+<META HTTP-EQUIV="refresh" CONTENT="5;URL=">
+<title>This is the WIFI page</title>
+<h3>WIFI DATA</h3>
+
+
+<table border=1>
+<tr><td align=center>ROUTER NAME</td><td align=center>SSID</td><td>&nbsp; RSSI &nbsp;</td><td>&nbsp; Freq &nbsp;</td><td>RX</td><td>TX</td><td>Channel Size</td><td>DATE</td></tr>
+{% for i in data %}
+<TR>
+<td align=center>
+<form method="post" action="/ui/bots">
+<input type="hidden" value="{{ data[i]['id'] }}" id="bot_id" name="bot_id">
+<button type="submit">{{ data[i]['name']}} </button>
+</form>
+</td>
+<td>
+{{ data[i]['ssid']}} 
+</td>
+<td align=center>
+{{ data[i]['rssi']}} 
+</td>
+<td align=center>
+{{ data[i]['freq']}} 
+</td>
+<td align=center>
+{{ data[i]['rx']}} 
+</td>
+<td align=center>
+{{ data[i]['tx']}} 
+</td>
+<td align=center>
+{{ data[i]['width']}} 
+</td>
+<td>
+{{ data[i]['ts']}} 
+</td>
+
+</TR>
+{% endfor %}
+
+</table>
+<p hidden>{{ today_date }}</p>
+
+{% include "footer.html" %}
+

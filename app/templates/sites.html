@@ -1,0 +1,15 @@
+<html>
+<title>This is the sites page</title>
+<h3>SITE LIST</h3>
+
+<table border=1>
+<tr><td>ID</td><td>Name</td><td>NETWORK</td><td>EXTERNAL IP</td></tr>
+{% for site in data %}
+<tr><td>{{ site['id'] }}</td><td>{{ site['name'] }}</td><td>{{ site['netblock'] }}</td><td>{{ site['ext_ip'] }}</td></tr>
+{% endfor %}
+</table>
+
+
+
+{% include "footer.html" %}
+

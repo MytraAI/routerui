@@ -1,0 +1,23 @@
+<html>
+<META HTTP-EQUIV="refresh" CONTENT="5;URL=">
+<title>JOBS</title>
+<h3>JOBS</h3>
+<ul>JOB List
+<table border=1>
+<tr><td>Bot ID</<td><td>Hostname</td><td>Action</td><td>Job Date</td></tr>
+{% for job in data %}
+<tr>
+<td>
+<form action="/ui/bots" method="post">
+<input type="hidden" value="{{ job.hostid }}" id="bot_id" name="bot_id">
+<button type="submit">BOT {{ job.hostid }}</button>
+</form>
+</td>
+<td>{{ job.hostname }}</td><td>{{ job.action }}</td><td>{{ job.created }}</td>
+</tr>
+
+{% endfor %}
+</table>
+</ul>
+
+{% include "footer.html" %}

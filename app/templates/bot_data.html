@@ -1,0 +1,121 @@
+<html>
+<title>Current Bot Info</title>
+<p>ID {{ data[0]['bot'] }} aka {{ data[0]['hostname']}}</p>
+
+{% for i in data %}
+ {% for b in i %}
+  {% if b == "neighbors" %}
+   <table border=1>
+   <tr><td>DHCP/Neighbors</td><td>MAC</td><td>IP</td></tr> 
+   {% for key,value in i.items() %}
+    {% for f in value %}
+    <tr>
+     {% if '00:01:05' in f %}
+      <td>Beckhoff</td>
+     {% elif '44:a9:2c' in f %}
+      <td>Camera</td>
+     {% elif 'd8:eb:97' in f %}
+      <td>Switch</td>
+     {% elif '00:06:77' in f %}
+      <td>Sick</td>
+     {% elif '34:08:e1' in f %}
+      <td>BB AI64</td>
+     {% elif '24:76:25' in f %}
+      <td>BB AI64</td>
+     {% elif '3c:6d:66' in f %}
+      <td>Jetson</td>
+     {% else %}
+      <td>DYN CLIENT</td>
+     {% endif %} 
+     <td>{{ f }}</td><td>{{ value[f]}}</td></tr>
+    {% endfor %}
+   {% endfor %}
+   </table>
+  {% endif %}
+  {% if b == "wifi" %}
+   <table border=1>
+   <tr><td>Router</td><td>Service</td><td>Value</td></tr>
+   {% for key,value in i.items() %}
+    {% for f in value %}
+     {% if f!="wifi" %}
+      <tr><td>*</td><td>{{ f }}</td><td>{{ value[f]}}</td></tr>
+     {%endif%}
+    {% endfor %}
+    </table>
+   {% endfor %}
+  {% endif %}
+
+  {% if b == "leases" %}
+   <table border=1>
+   <tr><td>STATIC</td><td>MAC</td><td>IP</td><td>SSH Port</td></tr>
+   {% for key,value in i.items() %}
+    {% for f in value %}
+     {% if f!="wifi" %}
+      {% if '34:08:e1' in value[f].mac %}
+      <tr><td>BBAI</td><td>{{ value[f].mac }}</td><td>{{ value[f].ip}}</td></td><td>{{ value[f].port + 9000}}</td></tr>
+      {% elif '24:76:25' in value[f].mac %}
+      <tr><td>BBAI</td><td>{{ value[f].mac }}</td><td>{{ value[f].ip}}</td></td><td>{{ value[f].port + 9000}}</td></tr>
+      {% elif '3c:6d:66' in value[f].mac %}
+      <tr><td>JETSON</td><td>{{ value[f].mac }}</td><td>{{ value[f].ip}}</td></td><td>{{ value[f].port + 9000}}</td></tr>
+      {% elif 'd8:eb:97' in value[f].mac %}
+      <tr><td>SWITCH</td><td>{{ value[f].mac }}</td><td>{{ value[f].ip}}</td></td><td>{{ value[f].port + 9000}}</td></tr>
+      {% else %}
+      <tr><td>LEASE</td><td>{{ value[f].mac }}</td><td>{{ value[f].ip}}</td></td><td>{{ value[f].port + 9000}}</td></tr>
+      {% endif %}
+     {%endif%}
+    {% endfor %}
+    </table>
+   {% endfor %}
+  {% endif %}
+
+
+
+ {% endfor %}
+
+{% endfor %}
+
+<form method="post">
+<label for="actions">Choose an action:</label>
+
+<select name="actions" id="actions">
+  <option value="">Actions</option>
+  <option value="reboot">Reboot</option>
+  <option value="wpa">WiFi Restart</option>
+  <option value="ntp">NTP update</option>
+  <option value="machineid">Machine ID update</option>
+  <option value="nftable">Firewall/NAT update</option>
+  <option value="mtr">MTR/traceroute report</option>
+  <option value="vxdb">VXLAN MAC report</option>
+  <option value="wlan">Update WiFi Config</option>
+  <option value="vpn">Update VPN Config</option>
+  <option value="speedtest">Speedtest (ookla)</option>
+  <option value="extip">Get External IP</option>
+  <option value="dhcp">Update DHCP Server</option>
+</select> 
+<input type="hidden" value="{{ data[0]['bot'] }}" id="bot_id" name="bot_id">
+
+<button type="submit">DOIT</button>
+</form>
+
+{% if data[3]['jobs'] %}
+ <p>Pending Actions -  
+ {% for i in data[3]['jobs'] %}
+  {{ i }}
+ {% endfor %}
+ </p>
+{% endif %}
+
+{% for l in data[5]['leases'] %}
+ {% if '34:08:e1' in data[5]['leases'][l]['mac'] %}
+ <p>To get to the BBAI -> ssh debian@{{ data[1]['wifi']['ip'] }} -p {{ data[5]['leases'][l]['port'] + 9000 }} </p>
+ {% elif '24:76:25' in data[5]['leases'][l]['mac'] %}
+ <p>To get to the BBAI -> ssh debian@{{ data[1]['wifi']['ip'] }} -p {{ data[5]['leases'][l]['port'] + 9000 }} </p>
+ {% endif %}
+ {% if '3c:6d:66' in data[5]['leases'][l]['mac'] %}
+ <p>To get to the Jetson -> ssh debian@{{ data[1]['wifi']['ip'] }} -p {{ data[5]['leases'][l]['port'] + 9000 }} </p>
+ {% endif %}
+{% endfor %}
+
+<p hidden>{{ today_date }}</p>
+
+{% include "footer.html" %}

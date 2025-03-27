@@ -1,0 +1,29 @@
+<html>
+<META HTTP-EQUIV="refresh" CONTENT="5;URL=">
+<title>SPEEDTESTS</title>
+<h3>SPEEDTESTS</h3>
+<ul>Speedtest List
+<table border=1>
+<tr><td>Bot ID</<td><td>Hostname</td><td>Up</td><td>Down</td>
+<td>Ping</td><td>ISP</td><td>City</td><td>Date</td>
+</tr>
+{% for trace in data %}
+<tr>
+<td>
+<form action="/ui/bots" method="post">
+<input type="hidden" value="{{ trace.bot_id }}" id="bot_id" name="bot_id">
+<button type="submit">ID {{ trace.bot_id }}</button>
+</form>
+</td>
+<td>{{ trace.bot_name }}</td><td>{{ trace.up }}</td><td>{{ trace.down }}</td>
+<td>{{ trace.ping }}ms</td>
+<td>{{ trace.isp }}</td>
+<td>{{ trace.city }}</td>
+<td>{{ trace.ts }}</td>
+</tr>
+
+{% endfor %}
+</table>
+</ul>
+
+{% include "footer.html" %}

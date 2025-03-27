@@ -1,0 +1,24 @@
+<html>
+<META HTTP-EQUIV="refresh" CONTENT="120;URL=">
+<title>Enrollment</title>
+<h3>Enrollment</h3>
+<form action="/ui/enroll" method="post">
+<input type="hidden" value="{{ data.mac }}" id="bot_mac" name="bot_mac">
+<input type="hidden" value="" id="authorize" name="authorize">
+
+<p> MAC ADDR - {{ data.mac }} </p>
+<p> NAME <input type="text" id="name" name="name"></p>
+
+<p> <label for="site">Choose a site:</label></p>
+<select name="site" id="site">
+{% for site in data.sites %}
+<option value="{{ site.id }}">{{ site.name }} - {{ site.netblock }} </option>
+
+{% endfor %}
+</select>
+<br>
+<br>
+<button type="submit">SUBMIT</button>
+</form>
+
+{% include "footer.html" %}

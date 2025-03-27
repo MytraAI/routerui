@@ -1,0 +1,23 @@
+<html>
+<META HTTP-EQUIV="refresh" CONTENT="5;URL=">
+<title>Enrollment</title>
+<h3>Enrollment</h3>
+<ul>Pending Enrollment List
+<table border=1>
+<tr><td>Bot ID</<td><td>STATE</td></tr>
+{% for trace in data %}
+<tr>
+<td>
+<form action="/ui/enroll" method="post">
+<input type="hidden" value="{{ trace.bot_mac }}" id="bot_mac" name="bot_mac">
+<button type="submit">BOT {{ trace.bot_mac }}</button>
+</form>
+</td>
+<td>{{ trace.state }}</td>
+</tr>
+
+{% endfor %}
+</table>
+</ul>
+
+{% include "footer.html" %}

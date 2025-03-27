@@ -1,0 +1,29 @@
+[Match]
+Name=lanbr0
+
+[Network]
+BindCarrier=eth0
+Address=192.168.1.1/24
+IPForward=yes
+DHCPServer=yes
+
+[DHCPServer]
+PoolOffset=100
+PoolSize=150
+EmitDNS=yes
+DNS=9.9.9.9
+EmitNTP=yes
+NTP=23.186.168.3
+EmitTimezone=yes
+Timezone=UTC
+DefaultLeaseTimeSec=120
+MaxLeaseTimeSec=180
+EmitDomains=yes
+Domains=artym.net
+
+{% for i in data %}
+# Statically Assigned Lease
+[DHCPServerStaticLease]
+MACAddress={{ i['mac'] }}
+Address={{ i['ip'] }}
+{% endfor %}

@@ -1,0 +1,24 @@
+<html>
+<title>This is the Traceroute page</title>
+<h3>Trace DATA</h3>
+
+<table border=1>
+<tr><td>ID</td><td>BOT</td><td>DATA</td></tr>
+
+{% for i in data %}
+
+<tr>
+<form method="post">
+<input type="hidden" value="{{  i['bot_id'] }}" id="bot_id" name="bot_id">
+<td> {{ i['t_id'] }} </td> 
+<td> <button type="submit"> {{ i['bot_name']}}</button>  </td>
+</form>
+<td> <pre>{{ i['trace']}}</pre> </td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% include "footer.html" %}
+

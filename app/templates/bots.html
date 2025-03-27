@@ -1,0 +1,25 @@
+<html>
+<title>BOTS</title>
+<h3>BOTS</h3>
+<ul>Bot List
+<table border=1>
+<tr><td>ID</<td><td align=center>Hostname</td><td>IP</td><td>PING</td><td>Last Seen</td></tr>
+{% for bot in data %}
+<tr>
+<td>
+<form method="post">
+<input type="hidden" value="{{ bot.id }}" id="bot_id" name="bot_id">
+<button type="submit">ID {{ bot.id }}</button>
+</form>
+</td>
+<td align=center>{{ bot.hostname }}</td><td>{{ bot.ip }}</td>
+<td>{{ bot.latency }}</td><td>{{ bot.ts }}</td>
+</tr>
+
+{% endfor %}
+</table>
+</ul>
+
+<p hidden>{{ today_date }}</p>
+
+{% include "footer.html" %}
